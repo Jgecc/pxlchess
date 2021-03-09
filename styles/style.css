@@ -1,0 +1,60 @@
+/* General form */
+
+:root {
+    --text-primary: #c8c8c8;
+    --bg-color: #121212;
+    --layer-primary: #181818;
+}
+
+body{
+    color: var(--text-primary);
+    background: var(--bg-color);
+    font-family: arial, sans-serif;
+}
+
+/* Content div */
+
+.content{
+    background: var(--layer-primary);
+    box-shadow: 5px 5px 10px rgb(14,14,14);
+    margin: 30px 20px 30px 20px;
+    padding:  20px 30px;
+    border-radius: 10px;
+}
+
+/* Slider style */
+
+body::-webkit-scrollbar{
+    width: 0.25rem;
+}
+
+body::-webkit-scrollbar-track{
+    background: #000000;
+}
+
+body::-webkit-scrollbar-thumb{
+    background: darkgoldenrod;
+}
+
+/* HEADER */
+
+header{
+    text-align: center;
+}
+
+nav ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+nav li{
+    display: inline-block;
+    margin-right: 20px;
+}
+
+/* GAMEFIELD */
+
+#game{
+    text-align: center;
+}
