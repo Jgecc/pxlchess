@@ -65,18 +65,18 @@ function chessTiles(color, posX, posY, width, height, numbers, texts) {
 // Calls the tiles to create
 function createBoard(){
     // For the chess pattern
-    var flip = 1;
+    let flip = 1;
     // For the Number on the tiles
-    var chessNumber = tileNumbery - 1;
+    let chessNumber = tileNumbery - 1;
 
     //  Tile loop
 
-    for (var x = 0; x <= width - tileWidth; x += tileWidth){
+    for (let x = 0; x <= width - tileWidth; x += tileWidth){
 
-        for (var y = 0; y <= height - tileHeight; y += tileHeight){
+        for (let y = 0; y <= height - tileHeight; y += tileHeight){
 
             // For the correct Letters
-            var row = x / tileWidth;
+            let row = x / tileWidth;
 
             // Tilecreation
             if (flip > 0) {

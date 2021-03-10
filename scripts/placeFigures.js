@@ -1,19 +1,19 @@
 /* Possible fields creator */
 
 // Variables for the possible fields
-var possibleFieldSize = 40;
-var possibleFiledSizeHover = 5;
-var possibleFieldCounter = 0;
+let possibleFieldSize = 40;
+let possibleFiledSizeHover = 5;
+let possibleFieldCounter = 0;
 
-var possibleField = [];
+let possibleField = [];
 
 // Creates the possible fields
 function possibleFields(posx, posy) {
     // Translates the fields to the actual position
-    var truePosX = tileCoordinate[posy][posx][0];
-    var truePosY = tileCoordinate[posy][posx][1];
+    let truePosX = tileCoordinate[posy][posx][0];
+    let truePosY = tileCoordinate[posy][posx][1];
     // Offset to center the fields
-    var posPlus = possibleFieldSize / 2;
+    let posPlus = possibleFieldSize / 2;
 
     // Creates the Fields
     possibleField[possibleFieldCounter] = PIXI.Sprite.from('possibleField.png');
@@ -49,40 +49,61 @@ function possibleFields(posx, posy) {
 // Deletes the fields
 function deletePossibleFields() {
     // Deletes the fields
-    for (var i = 0; i <= possibleFieldCounter; i++) {
+    for (let i = 0; i <= possibleFieldCounter; i++) {
         app.stage.removeChild(possibleField[i]);
         delete possibleField[i];
     }
     possibleFieldCounter = 0;
 
     // Deletes the values in the Array
-    for (var y = 0; y < tileNumbery; y++) {
+    for (let y = 0; y < tileNumbery; y++) {
 
-        for (var x = 0; x < tileNumberx; x++) {
+        for (let x = 0; x < tileNumberx; x++) {
 
             if (positions[y][x] == 8) {
                 positions[y][x] = 0;
             }
         }
     }
+    activeFigure = 0;
+    activePosition = {x: null, y: null};
 }
 
 /* Functions for figures */
 // Each figure has a State 0 = search and 1 = Move
 
-var activeFigure;
-var activePosition;
+let activeFigure;
+let activePosition = {x: null, y: null};
 
+// Places the king and the hints
 function king(color, posx, posy, state) {
+    // For the hints
     if (state == 0) {
+        // Data about the selected figure
         activeFigure = -1;
         activePosition = {x: posx, y: posy};
-        possibleFields(1, 0);
-        possibleFields(2, 0);
-    }else {
-        positions[activePosition.y][activePosition.x] = 0;
+
+        // Hints generation
+        for (let x = -1; x < 2; x++) {
+
+            for (let y = -1; y < 2; y++) {
+
+                if (activePosition.x + x >= 0 && activePosition.y + y >= 0 && activePosition.x + x < tileNumberx && activePosition.y + y < tileNumbery && positions[activePosition.x + x][activePosition.y + y] >= 0) {
+                    if (activePosition.x + x != activePosition.x || activePosition.y + y != activePosition.y) {
+                        possibleFields(activePosition.x + x, activePosition.y + y);
+                    }
+
+                }
+            }
+        }
+
+
+
+    }else { // For the movement
+        positions[activePosition.x][activePosition.y] = 0;
         positions[posx][posy] = color;
-        kings.position.set(tileCoordinate[posy][posx][0] + 5, tileCoordinate[posy][posx][1]);
+        
+        kings.position.set(tileCoordinate[posy][posx][0] + 5, tileCoordinate[posy][posx][1] + 5);
     }
 }
 
@@ -93,7 +114,12 @@ kings.width = tileWidth - 10;
 kings.height = tileHeight - 10;
 kings.position.set(tileCoordinate[0][0][0] + 5, tileCoordinate[0][0][1] + 5);
 
-const pawns = PIXI.Sprite.from('pawn.png');
+/*const pawns = PIXI.Sprite.from('pawn.png');
+pawns.width = tileWidth - 10;
+pawns.height = tileHeight - 10;
+pawns.position.set(tileCoordinate[1][1][0] + 5, tileCoordinate[1][1][1] + 5);*/
+
+const pawns = PIXI.Sprite.from('king.png');
 pawns.width = tileWidth - 10;
 pawns.height = tileHeight - 10;
 pawns.position.set(tileCoordinate[1][1][0] + 5, tileCoordinate[1][1][1] + 5);
